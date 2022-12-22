@@ -6,6 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="./Scripts/script.js" defer></script>
+    <script defer type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+<script defer nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
     <title>Güordle</title>
 </head>
 <body>
@@ -44,6 +46,23 @@
         <input type="text" class="char" disabled maxlength="1">
         <input type="text" class="char" disabled maxlength="1">
     </section>
+
+    <button style="--b:0;" id="word-again"><ion-icon name="help"></ion-icon></button>
+    <button style="--b:1rem;" id="replay"><ion-icon name="reload-outline"></ion-icon></button>
+
+    <div id="mensaje" class="">
+        <button id="close"><ion-icon name="close"></ion-icon></button>
+        <h1>La palabra era</h1>
+    <section>
+        <input type="text" class="char guess right answer" disabled maxlength="1">
+        <input type="text" class="char guess right answer" disabled maxlength="1">
+        <input type="text" class="char guess right answer" disabled maxlength="1">
+        <input type="text" class="char guess right answer" disabled maxlength="1">
+        <input type="text" class="char guess right answer" disabled maxlength="1">
+    </section>
+    </div>
+    
+    
 
 </body>
 </html>

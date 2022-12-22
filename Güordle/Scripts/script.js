@@ -1,6 +1,30 @@
 let inputs = document.querySelectorAll(".char");
 let rows = document.querySelectorAll(".row");
 
+let mensaje = document.getElementById("mensaje");
+
+let respuestas = document.querySelectorAll(".answer");
+
+const replay = document.getElementById("replay");
+
+const word_again = document.getElementById("word-again");
+
+const cerrar = document.getElementById("close");
+
+replay.addEventListener("click", () => {
+    window.location.reload();
+})
+
+word_again.addEventListener("click",() => {
+    mensaje.classList.add("active");
+    word_again.classList.remove("active");
+})
+cerrar.addEventListener("click",() => {
+    word_again.classList.add("active");
+    mensaje.classList.remove("active");
+})
+
+
 let intento = [];
 
 let readTextFile = (file)=>
@@ -17,7 +41,7 @@ let readTextFile = (file)=>
                 palabras = allText.split(RegExp('\r|\n'));
                 arr = palabras.filter(Boolean);
                 
-                // console.log(arr);
+
             }
         }
     }
@@ -30,6 +54,10 @@ const p = readTextFile('./Scripts/palabras.txt');
 palabras = p;
 let palabra_adivinar = palabras[Math.floor(Math.random() * palabras.length)].toUpperCase();
 let palabra_letras = palabra_adivinar.split('');
+
+respuestas.forEach((c,i) =>{
+    c.value = palabra_letras[i];
+})
 
 
 function countLetters(word, letra) {
@@ -60,9 +88,9 @@ function countLetters(word, letra) {
     return counter;
   }
 
-  console.log(countLetters(palabra_adivinar));
+  
 
-console.log(palabra_adivinar);
+
 
 inputs.forEach((e) => {
     e.addEventListener('keydown', (key) =>{
@@ -95,7 +123,7 @@ rows.forEach((e) => {
             e.childNodes.forEach((c) =>{
                 intento.push(c.value);
                 guess = intento.join('');
-                console.log(guess);
+                
             })
 
             if(guess.length==5){
@@ -111,8 +139,14 @@ rows.forEach((e) => {
                 
                 e.nextElementSibling.childNodes.forEach((c) =>{
                     c.disabled=false;
-                    if(e.nextElementSibling.firstElementChild){
+                    if(e.nextElementSibling.classList == "row"){
                     e.nextElementSibling.firstElementChild.focus();
+                    }else{
+                        if(guess != palabra_adivinar){
+                        // Perdio
+                        mensaje.classList.add("active");
+                        word_again.classList.remove("active");
+                        }
                     }
                     if(checkRight(palabra_letras,e)){
                         if(e.nextElementSibling){
@@ -142,18 +176,18 @@ function checkRight(original,usuario){
         intento = guess.split('');   
     })
 
-    console.log(intento)
+
  let p = countLetters(original.join(''));
 
  for (let i = 0; i < original.length; i++) {
     if(intento[i] == original[i]){
-        // p[intento[i]]--;
-        console.log(p);
-        setInterval(()=>{
+        p[intento[i]]--;
+        
+    
             usuario.children[i].classList.add('right');
             usuario.children[i].classList.add('guess');
 
-        },i*120)
+       
     }
     
 }
@@ -163,15 +197,19 @@ for (let i = 0; i < original.length; i++) {
         for (let j = 0; j < original.length; j++) {
             
             if(intento[i] == original[j]){
-                // console.log(intento[i]+ ' ' + original[j]);
-                p[intento[i]]--;
-                setInterval(()=>{
+                if(usuario.children[i].classList.contains("right")){
+                    p[intento[i]]++;
+                }else{
+
+                    p[intento[i]]--;
+                }
+            
 
                 usuario.children[i].classList.add('not')
                 usuario.children[i].classList.add('guess');
-            },i*120)
+           
 
-            console.log(p);
+            
             break
         }
     

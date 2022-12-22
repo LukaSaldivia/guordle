@@ -69,3 +69,4 @@ trazo
 parto
 unico
 ruedo
+palco
